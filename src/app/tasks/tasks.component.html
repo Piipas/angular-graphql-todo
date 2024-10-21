@@ -1,0 +1,58 @@
+<div class="w-[600px] py-10 space-y-4 h-screen relative">
+  <div class="flex gap-4">
+    <mat-form-field class="w-full">
+      <mat-label>Search</mat-label>
+      <input
+        matInput
+        type="text"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchChange()"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select
+        value="null"
+        class="capitalize"
+        [(ngModel)]="status"
+        (ngModelChange)="onStatusChange()"
+      >
+        <mat-option value="null">All</mat-option>
+        <mat-option value="true">Completed</mat-option>
+        <mat-option value="false">On Progress</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="w-[500px] mx-auto">
+    <div
+      *ngFor="let task of tasks; let i = index"
+      class="border-b-2 border-red py-2 flex gap-2 items-center group/task"
+    >
+      <mat-checkbox
+        [checked]="task.status"
+        (change)="onToggleComplete(task, $event.checked)"
+      ></mat-checkbox>
+      <span
+        class="{{ task.status && 'line-through text-zinc-500' }} flex-grow flex"
+      >
+        {{ task.title }}
+      </span>
+      <div
+        class="flex items-center opacity-0 group-hover/task:opacity-100 transition-opacity"
+      >
+        <button mat-icon-button (click)="openTaskUpdateDialog(task)">
+          <mat-icon class="text-zinc-500">edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="openDeleteUpdateDialog(task)">
+          <mat-icon class="text-zinc-500">delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <button
+    mat-fab
+    class="!absolute bottom-5 right-0"
+    (click)="openTaskCreateDialog()"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
